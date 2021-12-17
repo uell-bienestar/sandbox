@@ -27,9 +27,12 @@ jobs:
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
+    - name: Port Forward
+      run: |
+        kubectl port-forward --address 10.96.0.1 service/keycloak 8080:8080
     - name: Get service
       run: | 
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        curl http://127.0.0.1:8080
+        curl http://10.96.0.1:8080
