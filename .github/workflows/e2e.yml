@@ -19,12 +19,9 @@ jobs:
     - name: Mount volume
       run: |
         minikube mount ./:/etc/security &
-    - name: Run the tunnel
-      run: |
-        minikube tunnel &
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
-    - name: Curl Keycloak
+    - name: Get service
       run: | 
-        curl http://10.96.0.1/:8080
+        kubectl get svc keycloak
