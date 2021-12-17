@@ -16,9 +16,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
+      with:
+        driver: virtualbox
     - name: Mount volume
       run: |
         minikube mount ./:/etc/security &
+    - name: Tunnel
+      run: |
+        minikube tunnel &
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
@@ -27,5 +32,4 @@ jobs:
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        minikube tunnel &
         curl http://10.96.0.1:8080
