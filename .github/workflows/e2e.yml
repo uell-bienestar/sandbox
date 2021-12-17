@@ -21,9 +21,12 @@ jobs:
         kubernetes version: 'v1.23.0'
         github token: ${{ secrets.GITHUB_TOKEN }}
         driver: 'none'
-    - name: Mount volume
+#    - name: Mount volume
+#      run: |
+#        minikube mount ./:/etc/security &
+    - name: Copy properties file to security folder
       run: |
-        minikube mount ./:/etc/security &
+        cp -r realm_properties.json /etc/security/realm_properties.json
     - name: Tunnel
       run: |
         minikube tunnel &
