@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sandbox-manager-api
+  name: sandbox-manager-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sandbox-manager-api
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o komposed/
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sandbox-manager-api
+    spec:
+      containers:
+        - env:
+            - name: API_DSTU2_HOST
+              value: dstu2
+            - name: API_R4_HOST
+              value: r4
+            - name: API_R5_HOST
+              value: r5
+            - name: API_STU3_HOST
+              value: stu3
+            - name: AUTH_HOST
+              value: sandbox
+            - name: AUTH_PORT
+              value: "8060"
+            - name: DB_HOST
+              value: sandbox-mysql
+            - name: DB_NAME
+              value: sandman
+            - name: DB_PASSWORD
+              value: password
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: root
+          image: logicahealth/sandbox-manager-api
+          name: sandbox-manager-api
+          ports:
+            - containerPort: 12000
+          resources: {}
+      restartPolicy: Always
+status: {}

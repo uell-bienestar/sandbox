@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: patient-data-manager
+  name: patient-data-manager
+spec:
+  ports:
+    - name: "8096"
+      port: 8096
+      targetPort: 8096
+  selector:
+    io.kompose.service: patient-data-manager
+status:
+  loadBalancer: {}

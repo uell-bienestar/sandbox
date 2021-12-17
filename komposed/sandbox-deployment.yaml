@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sandbox
+  name: sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sandbox
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o komposed/
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sandbox
+    spec:
+      containers:
+        - env:
+            - name: API_DSTU2_HOST
+              value: dstu2
+            - name: API_DSTU2_PORT
+              value: "8078"
+            - name: API_R4_HOST
+              value: r4
+            - name: API_R4_PORT
+              value: "8070"
+            - name: API_STU3_HOST
+              value: stu3
+            - name: API_STU3_PORT
+              value: "8079"
+            - name: AUTH_HOST
+              value: sandbox
+            - name: AUTH_PORT
+              value: "8060"
+            - name: DB_HOST
+              value: sandbox-mysql
+            - name: DB_NAME
+              value: oic
+            - name: DB_PASSWORD
+              value: password
+            - name: DB_USER
+              value: root
+            - name: JAVA_OPTS
+              value: '"-agentlib:jdwp=transport=dt_socket,address=5060,server=y,suspend=n"'
+            - name: KEYCLOAK_AUTH_SERVER_URL
+              value: http://keycloak:8080/auth
+            - name: KEYCLOAK_CREDENTIALS
+              value: 593ada9c-b1dc-444f-a2e6-30cc4add8146
+            - name: KEYCLOAK_LOGOUT_SUCCESS_URL
+              value: http://keycloak:8080/auth/realms/Development/protocol/openid-connect/logout?redirect_uri=http://localhost:3001
+            - name: KEYCLOAK_REALM
+              value: Development
+            - name: KEYCLOAK_SSL_REQUIRED
+              value: none
+            - name: PATIENT_PICKER_HOST
+              value: localhost
+            - name: PATIENT_PICKER_PORT
+              value: "8094"
+            - name: SANDMAN_API_HOST
+              value: sandbox-manager-api
+            - name: SANDMAN_API_PORT
+              value: "12000"
+            - name: SHOW_SQL
+              value: "true"
+            - name: SPRING_PROFILES_ACTIVE
+              value: users-keycloak,local
+          image: logicahealth/sandbox:latest
+          name: sandbox
+          ports:
+            - containerPort: 3000
+            - containerPort: 3001
+            - containerPort: 8060
+          resources: {}
+      restartPolicy: Always
+status: {}

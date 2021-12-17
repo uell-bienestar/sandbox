@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sandbox-manager-api
+  name: sandbox-manager-api
+spec:
+  ports:
+    - name: "12000"
+      port: 12000
+      targetPort: 12000
+  selector:
+    io.kompose.service: sandbox-manager-api
+status:
+  loadBalancer: {}

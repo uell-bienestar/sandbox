@@ -1,4 +1,4 @@
-version: "2.3"
+version: "3"
 
 volumes:
   logica-sandbox-volume:
@@ -49,8 +49,7 @@ services:
       - API_R4_HOST=r4
       - API_R5_HOST=r5
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   sandbox:
     image: logicahealth/sandbox:latest
@@ -84,8 +83,7 @@ services:
       - KEYCLOAK_LOGOUT_SUCCESS_URL=http://keycloak:8080/auth/realms/Development/protocol/openid-connect/logout?redirect_uri=http://localhost:3001
       - JAVA_OPTS="-agentlib:jdwp=transport=dt_socket,address=5060,server=y,suspend=n"
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   dstu2:
     image: logicahealth/api
@@ -105,8 +103,7 @@ services:
       - AUTH_PORT=8060
       - MANIFEST_OVERRIDE=false
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   stu3:
     image: logicahealth/api
@@ -126,8 +123,7 @@ services:
       - AUTH_PORT=8060
       - MANIFEST_OVERRIDE=false
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   r4:
     image: logicahealth/api
@@ -147,8 +143,7 @@ services:
       - AUTH_PORT=8060
       - MANIFEST_OVERRIDE=false
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   r5:
     image: logicahealth/api
@@ -168,8 +163,7 @@ services:
       - AUTH_PORT=8060
       - MANIFEST_OVERRIDE=false
     depends_on:
-      sandbox-mysql:
-        condition: service_healthy
+      - sandbox-mysql
 
   static-content:
     image: logicahealth/sandbox-ce-static-content

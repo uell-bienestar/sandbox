@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sandbox-mysql
+  name: sandbox-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: sandbox-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o komposed/
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sandbox-mysql
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+          image: logicahealth/sandbox-mysql
+          livenessProbe:
+            exec:
+              command:
+                - /wait-for-db.sh
+            failureThreshold: 20
+            periodSeconds: 2
+            timeoutSeconds: 30
+          name: sandbox-mysql
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/mysql57
+              name: logica-sandbox-volume
+      restartPolicy: Always
+      volumes:
+        - name: logica-sandbox-volume
+          persistentVolumeClaim:
+            claimName: logica-sandbox-volume
+status: {}

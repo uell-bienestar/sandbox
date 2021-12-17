@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dstu2
+  name: dstu2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: dstu2
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o komposed/
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: dstu2
+    spec:
+      containers:
+        - env:
+            - name: API_PORT
+              value: "8078"
+            - name: AUTH_HOST
+              value: sandbox
+            - name: AUTH_PORT
+              value: "8060"
+            - name: DB_HOST
+              value: sandbox-mysql
+            - name: DB_PASSWORD
+              value: password
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: root
+            - name: MANIFEST_OVERRIDE
+              value: "false"
+            - name: SANDBOX_NAME
+              value: hspc8
+            - name: SBMA_HOST
+              value: sandbox-manager-api
+            - name: SBMA_PORT
+              value: "12000"
+            - name: SPRING_PROFILES_ACTIVE
+              value: dstu2,multitenant
+          image: logicahealth/api
+          name: dstu2
+          ports:
+            - containerPort: 8078
+          resources: {}
+      restartPolicy: Always
+status: {}

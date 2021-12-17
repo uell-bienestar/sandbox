@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -o komposed/
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: bilirubin-risk-chart
+  name: bilirubin-risk-chart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: bilirubin-risk-chart
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -o komposed/
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: bilirubin-risk-chart
+    spec:
+      containers:
+        - image: logicahealth/bilirubin-risk-chart-app
+          name: bilirubin-risk-chart
+          ports:
+            - containerPort: 8086
+          resources: {}
+      restartPolicy: Always
+status: {}
