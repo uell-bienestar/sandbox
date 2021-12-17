@@ -29,10 +29,10 @@ jobs:
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
     - name: Wait for pod
       run: |
-        kubectl wait --for=condition=Ready pods --all --all-namespaces
+        kubectl wait deploy/keycloak --for condition=available
     - name: Port Forward
       run: |
-        kubectl port-forward --address 10.96.0.1 service/keycloak 8080:8080
+        kubectl port-forward --address 10.96.0.1 service/keycloak 8080:8080 &
     - name: Get service
       run: | 
         kubectl get svc keycloak
