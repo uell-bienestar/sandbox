@@ -26,5 +26,6 @@ jobs:
       run: | 
         kubectl get svc keycloak
     - name: Curl service
-      run: | 
+      run: |
+        minikube tunnel &
         curl http://10.96.0.1:8080
