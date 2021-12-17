@@ -44,5 +44,4 @@ jobs:
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        sleep 10
         curl http://10.96.0.1:8080
