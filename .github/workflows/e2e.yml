@@ -9,9 +9,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  job1:
+  e2e:
     runs-on: ubuntu-latest
-    name: build discover and deploy 
+    name: Run E2E tests with minikube
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
@@ -25,3 +25,6 @@ jobs:
     - name: Get service
       run: | 
         kubectl get svc keycloak
+    - name: Curl service
+      run: | 
+        curl http://10.96.0.1:8080
