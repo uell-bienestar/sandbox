@@ -19,5 +19,6 @@ spec:
   type: LoadBalancer
   externalIPs:
     - 10.96.0.1
+    - 172.17.0.1
 status:
   loadBalancer: {}

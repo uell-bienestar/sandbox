@@ -17,25 +17,25 @@ jobs:
     - name: Start minikube
       uses: medyagh/setup-minikube@master
       with:
-        driver: none
+        driver: 'none'
     - name: Mount volume
       run: |
         minikube mount ./:/etc/security &
-#     - name: Tunnel
-#       run: |
-#         minikube tunnel &
+    - name: Tunnel
+      run: |
+        minikube tunnel &
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
     - name: Wait for pod
       run: |
         kubectl wait deploy/keycloak --for condition=available
-    - name: Port Forward
-      run: |
-        kubectl port-forward --address 127.0.0.1 service/keycloak 8080:8080 &
+#    - name: Port Forward
+#      run: |
+#        kubectl port-forward --address 0.0.0.0 service/keycloak 8080:8080 &
     - name: Get service
       run: | 
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        curl http://127.0.0.1:8080/auth
+        curl http://10.96.0.1:8080
