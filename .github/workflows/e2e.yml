@@ -27,9 +27,9 @@ jobs:
     - name: Copy properties file to security folder
       run: |
         sudo cp -r realm_properties.json /etc/security/realm_properties.json
-    - name: Tunnel
-      run: |
-        minikube tunnel &
+#     - name: Tunnel
+#       run: |
+#         minikube tunnel &
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
@@ -44,4 +44,4 @@ jobs:
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        curl http://10.96.0.1:8080
+        curl http://0.0.0.0:8080
