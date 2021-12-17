@@ -20,6 +20,7 @@ jobs:
         minikube version: 'v1.24.0'
         kubernetes version: 'v1.23.0'
         github token: ${{ secrets.GITHUB_TOKEN }}
+        driver: 'docker'
     - name: Mount volume
       run: |
         minikube mount ./:/etc/security &
