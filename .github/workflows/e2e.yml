@@ -41,7 +41,9 @@ jobs:
 #        kubectl port-forward --address 0.0.0.0 service/keycloak 8080:8080 &
     - name: Get service
       run: | 
-        kubectl get svc keycloak & minikube ip & kubectl describe svc keycloak
+        kubectl get svc keycloak
+        minikube ip
+        kubectl describe svc keycloak
     - name: Curl service
       run: |
         curl http://127.0.0.1:8080
