@@ -32,10 +32,10 @@ jobs:
         kubectl wait deploy/keycloak --for condition=available
     - name: Port Forward
       run: |
-        kubectl port-forward --address 10.96.0.1 service/keycloak 8080:8080 &
+        kubectl port-forward --address 0.0.0.0 service/keycloak 8080:8080 &
     - name: Get service
       run: | 
         kubectl get svc keycloak
     - name: Curl service
       run: |
-        curl http://10.96.0.1:8080
+        curl http://0.0.0.0:8080
