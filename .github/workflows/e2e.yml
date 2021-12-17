@@ -25,6 +25,6 @@ jobs:
     - name: Deploy to minikube
       run: |
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
-    - name: Ping keycloak
+    - name: Curl Keycloak
       run: | 
-        ping http://10.100.163.12:8080 -c 5
+        curl http://10.100.163.12:8080
