@@ -27,4 +27,4 @@ jobs:
         kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
     - name: Curl Keycloak
       run: | 
-        curl http://10.100.163.12:8080
+        curl http://10.96.0.1/:8080
