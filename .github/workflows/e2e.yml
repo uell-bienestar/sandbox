@@ -36,9 +36,9 @@ jobs:
     - name: Wait for pod
       run: |
         kubectl wait deploy/keycloak --for condition=available
-#    - name: Port Forward
-#      run: |
-#        kubectl port-forward --address 0.0.0.0 service/keycloak 8080:8080 &
+    - name: Port Forward
+      run: |
+        kubectl port-forward --address 0.0.0.0 service/keycloak 8080:8080 &
     - name: Get service
       run: | 
         kubectl get svc keycloak
