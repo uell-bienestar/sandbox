@@ -18,7 +18,7 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Mount volume
       run: |
-        minikube mount ./:/etc/security
+        minikube mount ./:/etc/security &
     - name: Run the tunnel
       run: |
         minikube tunnel &
