@@ -26,7 +26,7 @@ jobs:
 #        minikube mount ./:/etc/security &
     - name: Copy properties file to security folder
       run: |
-        cp -r realm_properties.json /etc/security/realm_properties.json
+        sudo cp -r realm_properties.json /etc/security/realm_properties.json
     - name: Tunnel
       run: |
         minikube tunnel &
