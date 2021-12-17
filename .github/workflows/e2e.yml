@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: E2E
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    name: build discover and deploy 
+    steps:
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Mount volume
+      run: |
+        minikube mount ./:/etc/security
+    - name: Run the tunnel
+      run: |
+        minikube tunnel &
+    - name: Deploy to minikube
+      run: |
+        kubectl apply -f ./komposed/keycloak-deployment.yaml -f ./komposed/keycloak-service.yaml
+    - name: Ping keycloak
+      run: | 
+        ping http://10.100.163.12:8080 -c 5
