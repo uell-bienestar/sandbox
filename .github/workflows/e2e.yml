@@ -44,4 +44,4 @@ jobs:
         kubectl get svc keycloak & minikube ip & kubectl describe svc keycloak
     - name: Curl service
       run: |
-        curl http://127.0.0.1:8080
+        curl http://0.0.0.0:8080
