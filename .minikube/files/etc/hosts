@@ -1,0 +1,13 @@
+127.0.0.1       localhost
+127.0.0.1       keycloak
+127.0.0.1       sandbox-mysql
+127.0.0.1       sandbox-manager-api
+127.0.0.1       sandbox
+127.0.0.1       dstu2
+127.0.0.1       stu3
+127.0.0.1       r4
+127.0.0.1       r5
+127.0.0.1       static-content
+
+127.0.1.1       minikube
+

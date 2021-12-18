@@ -1,0 +1,9 @@
+10.96.0.1       keycloak
+10.96.0.1       sandbox-mysql
+10.96.0.1       sandbox-manager-api
+10.96.0.1       sandbox
+10.96.0.1       dstu2
+10.96.0.1       stu3
+10.96.0.1       r4
+10.96.0.1       r5
+10.96.0.1       static-content

@@ -3,6 +3,7 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: kompose convert -o komposed/
+    kompose.service.type: LoadBalancer
     kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
@@ -15,5 +16,8 @@ spec:
       targetPort: 8079
   selector:
     io.kompose.service: stu3
+  type: LoadBalancer
+  externalIPs:
+    - 10.96.0.1
 status:
   loadBalancer: {}

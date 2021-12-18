@@ -1,7 +1,20 @@
 # E2E Research
 
-## docker
-Download [here](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
+## Local
+### No Password Sudoers
+*You may need to start new terminal sessions to see the changes.*
+```shell
+sudo visudo
+```
+```shell
+# /etc/sudoers
+
+%admin ALL=(ALL) NOPASSWD: ALL
+```
+### Append hosts to /etc/hosts
+```shell
+sudo cat hosts >> /etc/hosts
+```
 
 ## virtualbox
 ```shell
@@ -16,19 +29,38 @@ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-darwin
 sudo install minikube-darwin-amd64 /usr/local/bin/minikube
 rm minikube-darwin-amd64
 ```
-### Alias kubectl
-In `~/.zshrc` add:
+### Increase resources
 ```shell
+minikube start --memory 8192 --cpus 4
+# or
+minikube config set cpus 4
+minikube config set memory 8192
+```
+### Alias kubectl
+```shell
+# ~/.zshrc
+
 alias kubectl='minikube kubectl --'
 ```
 ### Set VirtualBox as default driver for MacOS
 ```shell
 minikube config set driver virtualbox
 ```
-### Mount local folder as shared folder
-*This is a running process.*
+### Set /etc/hosts
 ```shell
-minikub mount ./:/etc/security
+cp -r .minikube/files/etc ~/.minikube/files
+minikube start
+```
+### Mount local folder as shared folder
+*This is a background process.*
+```shell
+minikube mount ./:/etc/security &> /dev/null & #MOUNT_PID=$!
+```
+### Kill Mount
+*This is a background process.*
+```shell
+kill $(ps aux | grep -E "minikube\smount" | awk '{print $2}')
+#kill $MOUNT_PID
 ```
 ### Interact with cluster
 ```shell
@@ -41,12 +73,22 @@ minikube kubectl -- get po -A
 ### View Dashboard
 *This is a running process.*
 ```shell
-minikube dashboard
+minikube dashboard &> /dev/null & #DASHBOARD_PID=$!
+```
+### Kill Dashboard
+```shell
+kill $(ps aux | grep -E "minikube\sdashboard" | awk '{print $2}')
+#kill $DASHBOARD_PID
 ```
 ### Run tunnel for LoadBalancer
-*This is a running process.*
+*This is a background process.*
 ```shell
-minikube tunnel
+minikube tunnel &> /dev/null & #TUNNEL_PID=$!
+```
+### Kill tunnel
+```shell
+kill $(ps aux | grep -E "minikube\stunnel\s\-c" | awk '{print $2}')
+#kill $TUNNEL_PID
 ```
 ### Start minikube
 ```shell
@@ -60,6 +102,24 @@ minikube stop
 ```shell
 minikube delete --all
 ```
+### Wait for kubernetes pod to be ready in deployment
+```shell
+kubectl wait --for=condition=ready pod $(kubectl get pods | grep keycloak | awk '{print $1}')
+```
+### Apply kubernetes deployment
+```shell
+kubectl apply -f ./komposed/keycloak-service.yaml \
+-f ./komposed/keycloak-deployment.yaml \
+-f ./komposed/logica-sandbox-volume-persistentvolumeclaim.yaml \
+-f ./komposed/sandbox-mysql-deployment.yaml \
+-f ./komposed/sandbox-mysql-service.yaml \
+-f ./komposed/sandbox-manager-api-deployment.yaml \
+-f ./komposed/sandbox-manager-api-service.yaml \
+-f ./komposed/sandbox-deployment.yaml \
+-f ./komposed/sandbox-service.yaml \
+-f ./komposed/static-content-deployment.yaml \
+-f ./komposed/static-content-service.yaml
+```
 
 ## kompose
 ### Install
@@ -67,6 +127,12 @@ minikube delete --all
 curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.0/kompose-darwin-amd64 -o kompose
 chmod +x kompose
 sudo mv kompose /usr/local/bin/kompose
+```
+
+## MySQL
+### Connect to database
+```shell
+mysql -u root -ppassword -h 10.96.0.1 -P 3306
 ```
 
 ### Known Issues
