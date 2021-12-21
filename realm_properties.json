@@ -1,6 +1,6 @@
 {
-  "id": "Development",
-  "realm": "Development",
+  "id": "GEN",
+  "realm": "GEN",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
